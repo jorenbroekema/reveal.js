@@ -25,12 +25,258 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
-			</div>
-		</div>
 
-		<script src="js/reveal.js"></script>
+        <section id="slideOne">
+          <a href="https://devhints.io/es6">Javascript ES6</a> & <a href="https://lit-html.polymer-project.org/">lit-html rendering</a>
+        </section>
+
+        <section id="slideTwo">
+          <section>
+            <h2>What is ES6?</h2>
+            <img width="50%" src="../assets/es6.jpeg">
+          </section>
+          <section>
+            <h2>Block scoping, let and const</h2>
+          </section>
+          <section>
+            <h2>var</h2>
+            <p>Vars get hoisted to lexical scope before anything else happens.</p>
+            <pre>
+              <code data-trim data-noescape>
+              function fn () {
+                if (true) {
+                  <mark>var y = 1</mark> // hoisted up to function scope
+                }
+                console.log(y); // 1
+              }
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>Let</h2>
+            <pre>
+              <code data-trim data-noescape>
+              function fn () {
+                if (true) {
+                  <mark>let y = 1</mark> // only inside this if
+                  console.log(y) // 1
+                }
+                console.log(y) // undefined
+              }
+              </code>
+            </pre>
+          </section>
+          <section>
+            <h2>const</h2>
+            <pre>
+              <code data-trim data-noescape>
+              function fn () {
+                if (true) {
+                  <mark>const y = 1</mark> // only inside this if
+                  console.log(y) // 1
+                }
+                console.log(y) // undefined
+              }
+              </code>
+            </pre>
+            <p>Const works exactly like let, but cannot be reassigned!</p>
+            <p>Always use let and const, <b>NEVER</b> var</p>
+          </section>
+        </section>
+
+        <section id="slideThree">
+          <section>
+            <h2>ES Modules</h2>
+            <p>The new standard for importing and exporting packages</p>
+          </section>
+          <section>
+            <h2>Exports</h2>
+              Before:
+              <pre><code data-trim data-noescape data-line-numbers="2,5">
+                // Default export
+                module.exports.default = function () { return 'Hello, World' };
+
+                // Named export
+                module.exports.pi = 3.14159;
+              </code></pre>
+              After:
+              <pre><code data-trim data-noescape data-line-numbers="2,5">
+                // Default export
+                export default function () { return 'Hello, World' };
+
+                // Named export
+                export const pi = 3.14159;
+              </code></pre>
+          </section>
+          <section>
+            <h2>Imports</h2>
+            Before:
+            <pre><code data-trim data-noescape data-line-numbers="2,3,6,9,12">
+              // Default import
+              const arbitraryName = require('./library.js').default ||
+                require('./library.js');
+
+              // Named import
+              import { libraryClass } from './library.js';
+
+              // Import all named Imports
+              require('./helpers');
+
+              // Import as custom named
+              const Helpers = require('./helpers');
+            </code></pre>
+          </section>
+          <section>
+            <h2>Imports</h2>
+            After:
+            <pre><code data-trim data-noescape data-line-numbers="2,5,8,11">
+              // Default import
+              import arbitraryName from './library.js';
+
+              // Named import
+              import { libraryClass } from './library.js';
+
+              // Import all named Imports
+              import './helpers';
+
+              // Import as custom named
+              import * as Helpers = import('./helpers');
+            </code></pre>
+          </section>
+          <section>
+            <h2>Script type module</h2>
+            <pre><code data-trim data-noescape>
+              &lt;script <mark>type="module"</mark> src="./helpers.js"&gt;&lt;/script&gt;
+            </code></pre>
+          </section>
+          <section>
+            <h2>Bare module resolution</h2>
+            <pre><code data-trim data-noescape>
+              // relative import
+              import { html, render } from './node_modules/lit-html/index.js';
+
+              // bare import
+              import { html, render } from 'lit-html';
+            </code></pre>
+          </section>
+          <section data-transition="fade-in" data-transition-speed="fast">
+            <h2>Bare module resolution</h2>
+            <p>For bare imports, you need something that resolves them:</p>
+            <ul>
+              <li class="fragment">Build tools like Webpack, Grunt, Rollup</li>
+              <li class="fragment">Local Dev Servers like:
+                <ul>
+                  <li class="fragment">es-dev-server</li>
+                  <li class="fragment">webpack-dev-server</li>
+                  <li class="fragment">polymer-cli</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <h2>Template literals</h2>
+            <pre><code data-trim data-noescape>
+              const animal = 'squirrel';
+              const food = 'apple';
+
+              // Before
+              console.log('The ' + animal + ' eats the ' + food);
+
+              // With template literals <mark>` `</mark>
+              console.log(`The ${animal} eats the ${food}`);
+
+              // Or in multiline strings
+              console.log(`
+                Animal: ${animal},
+                Food: ${food}
+              `);
+            </code></pre>
+          </section>
+        </section>
+        <section id="slideThree">
+          <section>
+            <h2>What is lit-html?</h2>
+            <div style="display: flex; align-items: center;">
+              <div class="fragment" style="width: 45%">
+                <p style="font-size: 2rem">Preact rendering (VDOM)</p>
+                <img src="../assets/preact.gif">
+              </div>
+              <div style="padding: 0 20px; width: 10%"></div>
+              <div class="fragment" style="width: 45%">
+                <p style="font-size: 2rem">Lit-html rendering</p>
+                <img src="../assets/lit.gif">
+              </div>
+            </div>
+          </section>
+          <section>
+            <h2>How do we use it?</h2>
+            <h4 class="fragment">Template Literals!</h4>
+          </section>
+          <section>
+            <pre><code data-trim data-noescape>
+              import { html, render } from 'lit-html';
+
+              // A lit-html template uses the `html` template tag:
+              let sayHello = (name) => html`&lt;h1&gt;Hello ${name}&lt;/h1&gt;`;
+
+              // It's rendered with the `render()` function:
+              render(sayHello('World'), document.body);
+
+              // And re-renders only update the data that changed
+              render(sayHello('Everyone'), document.body);
+            </code></pre>
+          </section>
+          <section>
+            <h2>How it works</h2>
+            <img class="fragment" src="../assets/lit-html.png">
+            <p class="fragment">Only the dynamic parts of the DOM are updated.</p>
+            <p class="fragment">Only when the property value has changed.</p>
+          </section>
+          <section>
+            <h2>Advanced usage</h2>
+            <pre><code data-trim data-noescape>
+              import { html, render } from 'lit-html';
+
+              // A lit-html template looping over an array to generate a list
+              const listAnimals = (animals) => html`
+                Animals:
+                &lt;ul&gt;
+                ${animals.map(animal => html`
+                  &lt;li&gt;
+                    ${animal}
+                  &lt;/li&gt;
+                `)}
+                &lt;/ul&gt;
+              `;
+              render(listAnimals(['Giraffe', 'Monkey', 'Dog']), document.body);
+            </code></pre>
+          </section>
+          <section>
+            <h2>Advanced usage</h2>
+            <pre class="stretch"><code data-trim data-noescape>
+              import { html, render } from 'lit-html';
+
+              const userAuthorized = true;
+              const authorizedMessage = "You're authorized!";
+              const unauthorizedMessage = "You don't have access to this.";
+
+              // A lit-html template looping over an array to generate a list
+              const listAnimals = (animals) => html`
+                &lt;h3&gt;Dashboard&lt;/h3&gt;
+                ${userAuthorized ?
+                  return html`${authorizedMessage}` :
+                  return html`${unauthorizedMessage}`
+                }
+              `;
+
+              render(listAnimals(['Giraffe', 'Monkey', 'Dog']), document.body);
+            </code></pre>
+          </section>
+        </section>
+			</div>
+    </div>
+
+    <script src="js/reveal.js"></script>
 
 		<script>
 			// More info about config & dependencies:
